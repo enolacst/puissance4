@@ -1,0 +1,46 @@
+Script démarré 2021-01-11 17:06:36+01:00
+mmc@hobbes-lr: python3 -O main_tests.py
+quel est le fichier à traiter ? connect4
+tentative de lecture de connect4
+select wich subtests you want
+Pour répondre par oui, utiliser l'un des symboles 'oO0Yy'
+Passer tous les tests ? 1 #non
+Tests du jalon 01 ? 0 #oui
+>>> Jalon 01: Test de board ? 0
+board added
+>>> Jalon 01: Test de win ? 1
+Vous avez 1 série(s) à passer
+test_default (tests.test_board.TestDefault)
+test default values ... ok
+test_set_args (tests.test_board.TestBuilder)
+control default values ... ok
+test_actions (tests.test_board.TestActions)
+a filled column cant be selected any more ... ok
+test_allowed_move (tests.test_board.TestMove)
+what if move is allowed ... ok
+test_forbidden_move (tests.test_board.TestMove)
+what if move is not allowed ... ok
+test_undo (tests.test_board.TestUndo)
+undo a previous action ... ok
+test_reset (tests.test_board.TestReset)
+undo a previous action ... ok
+test_over_nomove (tests.test_board.TestOverFullBoard)
+after nbl*nbc move, over is True ... ok
+test_column_outofrange (tests.test_board.TestStateSetter)
+state contains a tuple with col out of range ... ok
+test_line_outofrange (tests.test_board.TestStateSetter)
+state contains a tuple with line out of range ... ok
+test_nonconsecutive_line (tests.test_board.TestStateSetter)
+state contains a tuple with non-consecutive line ... ok
+test_state_ok (tests.test_board.TestStateSetter)
+a valid state can be set ... ok
+test_tuple_seen (tests.test_board.TestStateSetter)
+state contains 2 identical tuples ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.003s
+
+OK
+mmc@hobbes-lr: exit
+
+Script terminé sur 2021-01-11 17:07:36+01:00
