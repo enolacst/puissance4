@@ -75,13 +75,106 @@ class TestWinIsOver_332(unittest.TestCase):
                 self.assertEqual(self.o.actions, (), "No action left")
                 self.o.undo()
 
-class TestStateSetterWin(unittest.TestCase):
-    """ uploading a state where there is a win situation """
+class TestWinNoCylinder(unittest.TestCase):
+    """ uploading a state where there is a win situation 
+        and board is flat
+    """
+    def setUp(self):
+        self.K = getattr(tp, 'Board')
+        self.o = self.K(3, 3, 3)
+
+    def test_line(self):
+        """ win on a line """
+        for i in range(2): self.o.move('A')
+        for i in range(2): self.o.move('B')
+        self.assertFalse(self.o.win(), "no win detected")
+        self.o.move('C')
+        self.assertEqual(self.o.board, (1,1,1,2,2,0,0,0,0),
+                         "wrong board")
+        self.assertTrue(self.o.win(),"Expect a win bottom row")
+
+    def test_column(self):
+        """ win on a column """
+        for i in range(2):
+            self.o.move('A') ; self.o.move('B')
+
+        self.assertFalse(self.o.win(), "no win detected")
+        self.o.move('A')
+        self.assertEqual(self.o.board, (1,2,0,1,2,0,1,0,0),
+                         "wrong board")
+        self.assertTrue(self.o.win(),"Expect a win column 'A'")
+
+    def test_diagonal(self):
+        """ win on a diagonal """
+        self.o.move('A') ; self.o.move('B') ; self.o.move('B')
+        self.o.move('C') ; self.o.move('C') ; self.o.move('A')
+
+        self.assertFalse(self.o.win(), "no win detected")
+        self.o.move('C')
+        self.assertEqual(self.o.board, (1,2,2,2,1,1,0,0,1),
+                         "wrong board")
+        self.assertTrue(self.o.win(),"Expect a win on diagonal")
+        
+class TestWinWithCylinder(unittest.TestCase):
+    """ uploading a state where there is a win situation 
+        and board is a cylinder
+    """
+    def setUp(self):
+        self.K = getattr(tp, 'Board')
+        self.o = self.K(4, 4, 3, True)
+
+    def test_line(self):
+        """ win on 1st line """
+        for i in range(2): self.o.move('A')
+        for i in range(2): self.o.move('B')
+        self.assertFalse(self.o.win(), "no win detected")
+        self.o.move('D')
+        self.assertEqual(self.o.board, (1,1,0,1,
+                                        2,2,0,0,
+                                        0,0,0,0,
+                                        0,0,0,0),
+                         "wrong board")
+        self.assertTrue(self.o.win(),"Expect a win bottom row")
+
+    def test_diagonal1(self):
+        """ win on a diagonal """
+
+        for i in range(3): self.o.move('A')
+        for i in range(3): self.o.move('D')
+
+        self.assertFalse(self.o.win(), "no win detected")
+        self.o.move('C')
+        self.assertEqual(self.o.board,
+                         (1,0,1,2,
+                          2,0,0,1,
+                          1,0,0,2,
+                          0,0,0,0),
+                         "wrong board")
+        self.assertTrue(self.o.win(),"Expect a win on diagonal")
+
+    def test_diagonal2(self):
+        """ win on a diagonal """
+        self.o.move('D')
+        for i in range(2): self.o.move('A')
+        for i in range(2): self.o.move('B')
+        self.o.move('D')
+
+        self.assertFalse(self.o.win(), "no win detected")
+        self.o.move('B')
+        self.assertEqual(self.o.board,
+                         (2,2,0,1,
+                          1,1,0,2,
+                          0,1,0,0,
+                          0,0,0,0),
+                         "wrong board")
+        self.assertTrue(self.o.win(),"Expect a win on diagonal")
+        
     
 def suite(fname):
     """ permet de récupérer les tests à passer avec l'import dynamique """
     global tp
-    klasses = (TestWinIsOver_333, TestWinIsOver_332, TestStateSetterWin,)
+    klasses = (TestWinIsOver_333, TestWinIsOver_332,
+               TestWinNoCylinder, TestWinWithCylinder)
     
     try:
         tp = __import__(fname)
