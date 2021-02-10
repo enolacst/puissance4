@@ -95,6 +95,12 @@ class Board:
         return (self.__color[1] if self.turn==self.__color[-1]
                 else self.__color[-1])
     @property
+    def winner(self):
+        """ the winner of the game """
+        if self.win(): return self.opponent
+        return None
+    
+    @property
     def state(self) -> tuple:
         """ getter: the ordered game play """
         return tuple(self.__data[5])
@@ -225,7 +231,7 @@ class Board:
                         count = self.stones
                     count += 1
 
-                if nbStone >= self.stones:
+                if nbStone >= self.stones: #gagné
                     return True
 
                 # on cherche les stones à gauche
@@ -238,7 +244,7 @@ class Board:
                         count = self.stones
                     count += 1
 
-                if nbStone >= self.stones:
+                if nbStone >= self.stones:#gagné
                     return True
 
                 nbStone = 1
@@ -253,7 +259,7 @@ class Board:
                         count = self.stones
                     count += 1
 
-                if nbStone >= self.stones:
+                if nbStone >= self.stones:#gagné
                     return True
 
                 # on cherche les stones en bas
@@ -266,7 +272,7 @@ class Board:
                         count = self.stones
                     count += 1
 
-                if nbStone >= self.stones:
+                if nbStone >= self.stones:#gagné
                     return True
 
                 nbStone = 1
@@ -281,7 +287,7 @@ class Board:
                         count = self.stones
                     count += 1
 
-                if nbStone >= self.stones:
+                if nbStone >= self.stones:#gagné
                     return True
 
                 # on cherche les stones sur la diagonale en bas à droite
@@ -294,7 +300,7 @@ class Board:
                         count = self.stones
                     count += 1
 
-                if nbStone >= self.stones:
+                if nbStone >= self.stones:#gagné
                     return True
 
                 nbStone = 1
@@ -309,7 +315,7 @@ class Board:
                         count = self.stones
                     count += 1
 
-                if nbStone >= self.stones:
+                if nbStone >= self.stones:#gagné
                     return True
 
                 # on cherche les stones sur la diagonale en bas à gauche
@@ -322,10 +328,10 @@ class Board:
                         count = self.stones
                     count += 1
 
-                if nbStone >= self.stones:
+                if nbStone >= self.stones:#gagné
                     return True
 
-                return False
+                return False #pas encore
         else:
             #print('personne n\'a joué')
             return False
