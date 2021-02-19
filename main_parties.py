@@ -128,6 +128,7 @@ def manche(yellow:Player, red:Player, g:c4.Board) -> tuple:
     requires j.game to be similar to g
     """
     g.reset() # new start
+    print(g)
     yellow.who_am_i = g.turn
     red.who_am_i = g.opponent
     while not g.over():
@@ -142,13 +143,12 @@ def manche(yellow:Player, red:Player, g:c4.Board) -> tuple:
     time.sleep(.5)
     print(" Done")
 
-    if g.win():
-        if g.timer % 2 == 0:
-            return (0, g.timer)
-        else:
-            return (g.timer, 0)
-    else: # a draw
+    if g.winner is None: # a draw
         return (g.timer/2, g.timer/2)
+    else:
+        _ = [0, 0]
+        _[g.winner] = g.timer
+        return tuple(_)
 
 def partie(yellow:Player, red:Player,
            g:c4.Board, nbManches:int=2) -> Statistics:

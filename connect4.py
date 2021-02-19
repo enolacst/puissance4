@@ -18,6 +18,7 @@ attributs read only
 > turn: who plays next move
 > actions: allowed moves
 > board: internal 1D representation
+> winner: the winner of the game
 
 attributs read/write
 > state: moves' history
@@ -94,6 +95,11 @@ class Board:
         """ getter: who's the opponent of the current player """
         return (self.__color[1] if self.turn==self.__color[-1]
                 else self.__color[-1])
+    @property
+    def winner(self):
+        """ the winner of the game """
+        if self.win(): return self.opponent
+        return None
     @property
     def state(self) -> tuple:
         """ getter: the ordered game play """
@@ -183,7 +189,7 @@ class Board:
 
     def over(self) -> bool:
         """ return True iff game is over """
-        return self.actions == () or self.win()
+        return self.actions == ()
 
     def win(self) -> bool:
         """ return True iff the last stone is a win """
@@ -196,11 +202,13 @@ class Board:
         else:
             _msg = "Board is flat\n"
         if self.over():
-            if self.timer == self.nbc*self.nbl:
-                _msg += "Game is a draw\n"
+            if not self.win():
+                _msg += ("Game is a draw - last stone in {}\n"
+                         "".format(self.state[-1]))
             else:
                 _msg += ("Game is a win in {} steps for {}\n"
-                         "".format(self.timer-1, self.opponent))
+                         "last stone is {}\n"
+                         "".format(self.timer, self.opponent, self.state[-1]))
         else:
             _msg += ("Stone(s) on the board {:02d},\n"
                     "{} to play choose among {}\n"

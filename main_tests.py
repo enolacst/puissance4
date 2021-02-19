@@ -24,6 +24,31 @@ try:
 except:
     print("failed test_win")
     pass
+try:
+    from tests import test_randy
+except:
+    print("failed test_randy")
+    pass
+try:
+    from tests import test_human
+except:
+    print("failed test_human")
+    pass
+try:
+    from tests import test_minmax
+except:
+    print("failed test_minmax")
+    pass
+try:
+    from tests import test_negamax
+except:
+    print("failed test_negamax")
+    pass
+try:
+    from tests import test_alphabeta
+except:
+    print("failed test_alphabeta")
+    pass
 #================================ unittest area ========================#
 def suite_me(fname, toTest):
     if not hasattr(toTest, '__iter__'): raise TypeError("go to Hell !")
@@ -50,8 +75,6 @@ if __name__ == '__main__':
 
     target = param.split('.')[0]
 
-    target = param.split('.')[0]
-
     _out = check_property(target != '','acces au fichier')
     print("tentative de lecture de {}".format(target))
     try:
@@ -65,6 +88,9 @@ if __name__ == '__main__':
     _todo = []
     _submenu = { '1': ("board win",
                        [test_board, test_win]),
+                 '2': ("randy human minmax negamax alphabeta",
+                       [test_randy, test_human, test_minmax,
+                        test_negamax, test_alphabeta]),
                       }
     _all = None
     print("select wich subtests you want")

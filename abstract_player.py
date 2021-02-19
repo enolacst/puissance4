@@ -25,12 +25,14 @@ class Player:
         # on verifie que l'on a tout ce qui nous est nécessaire
         # pour travailler
         latt = "__str__ state turn opponent timer"
-        latt += " win over actions move undo"
+        latt += " winner over actions move undo reset"
         for _att in latt.split():
             if not hasattr(jeu, _att):
-                raise TypeError("cannot use this game, {} is missing")
+                raise TypeError("cannot use this game, {} is missing"
+                                "".format(_att))
 
         self.__name = str(nom).strip()
+        jeu.reset()
         self.__game = jeu
         self.__who = None
         self.__idnum = self.ID+1
@@ -72,10 +74,9 @@ class Player:
 
     def estimation(self):
         """ a simple estimation """
-        if self.game.win() and self.game.opponent == self.who_am_i:
-            return 100
-        elif self.game.win() and self.game.turn == self.who_am_i:
-            return -100
-        else: return 0
+        if self.game.winner is None: _e = 0
+        elif self.game.winner == self.who_am_i: _e = 100
+        else: _e = -100
+        return _e
 
     
